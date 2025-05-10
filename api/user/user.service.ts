@@ -10,6 +10,7 @@ class Service {
     });
   }
 
+  // test doang
   async fetchByReferralCode(referral_code: string) {
     return await prisma.user.findFirst({
       where: {
