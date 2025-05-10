@@ -19,6 +19,8 @@ class Service {
       },
     });
   }
+
+  
 }
 
 export const AuthService = new Service();

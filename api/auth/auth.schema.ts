@@ -5,6 +5,8 @@ export const RegisterSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
   profile_picture: z.string().optional().default(""),
+
+  referred_by_code: z.string().optional().default(""),
 });
 
 export const LoginSchema = z.object({

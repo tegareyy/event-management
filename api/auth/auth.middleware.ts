@@ -13,12 +13,15 @@ class Middleware {
         data: req.body,
       });
 
-      const checkEmail = await UserService.fetchUserByEmail(validated.email);
-
+      const checkEmail = await UserService.fetchByEmail(validated.email);
       if (checkEmail) throw new Error(`Email Already Exist`);
+
+      const checkReferralCode = await UserService.fetchByReferralCode(validated.referred_by_code);
+      if (validated.referred_by_code && !checkReferralCode) throw new Error(`Referral Code Not Found`);
 
       req.body = {
         ...validated,
+        referred_by_code: checkReferralCode?.referral_code || null,
         password: await hashPassword(validated.password),
       };
 
@@ -35,7 +38,7 @@ class Middleware {
         data: req.body,
       });
 
-      const user = await UserService.fetchUserByEmail(validated.email);
+      const user = await UserService.fetchByEmail(validated.email);
       if (!user || user.is_deleted) throw new Error(`Email Not Found`);
 
       const checkPass = await comparePassword(validated.password, user.password);
