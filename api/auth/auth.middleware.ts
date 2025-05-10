@@ -41,7 +41,10 @@ class Middleware {
       const checkPass = await comparePassword(validated.password, user.password);
       if (!checkPass) throw new Error(`Invalid Password`);
 
-      req.body = validated;
+      req.body = {
+        ...validated,
+        user,
+      };
 
       next();
     } catch (error) {
