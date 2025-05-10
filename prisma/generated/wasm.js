@@ -130,6 +130,31 @@ exports.Prisma.UserScalarFieldEnum = {
   profile_picture: 'profile_picture',
   referral_code: 'referral_code',
   referred_by_code: 'referred_by_code',
+  points_balance: 'points_balance',
+  points_expiry_date: 'points_expiry_date',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  is_deleted: 'is_deleted'
+};
+
+exports.Prisma.CouponScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  code: 'code',
+  discount_amount: 'discount_amount',
+  expired_at: 'expired_at',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  is_deleted: 'is_deleted'
+};
+
+exports.Prisma.CouponUserScalarFieldEnum = {
+  id: 'id',
+  expired_at: 'expired_at',
+  used: 'used',
+  user_id: 'user_id',
+  coupon_id: 'coupon_id',
   created_at: 'created_at',
   updated_at: 'updated_at',
   is_deleted: 'is_deleted'
@@ -180,29 +205,6 @@ exports.Prisma.TransactionScalarFieldEnum = {
   is_deleted: 'is_deleted'
 };
 
-exports.Prisma.PointScalarFieldEnum = {
-  id: 'id',
-  user_id: 'user_id',
-  amount: 'amount',
-  source: 'source',
-  expired_at: 'expired_at',
-  created_at: 'created_at',
-  updated_at: 'updated_at',
-  is_deleted: 'is_deleted'
-};
-
-exports.Prisma.CouponScalarFieldEnum = {
-  id: 'id',
-  user_id: 'user_id',
-  code: 'code',
-  discount_amount: 'discount_amount',
-  expired_at: 'expired_at',
-  used: 'used',
-  created_at: 'created_at',
-  updated_at: 'updated_at',
-  is_deleted: 'is_deleted'
-};
-
 exports.Prisma.ReviewScalarFieldEnum = {
   id: 'id',
   user_id: 'user_id',
@@ -234,6 +236,19 @@ exports.Prisma.UserOrderByRelevanceFieldEnum = {
   referred_by_code: 'referred_by_code'
 };
 
+exports.Prisma.CouponOrderByRelevanceFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  code: 'code'
+};
+
+exports.Prisma.CouponUserOrderByRelevanceFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  coupon_id: 'coupon_id'
+};
+
 exports.Prisma.EventOrderByRelevanceFieldEnum = {
   id: 'id',
   organizer_id: 'organizer_id',
@@ -254,17 +269,6 @@ exports.Prisma.TransactionOrderByRelevanceFieldEnum = {
   user_id: 'user_id',
   event_id: 'event_id',
   payment_proof: 'payment_proof'
-};
-
-exports.Prisma.PointOrderByRelevanceFieldEnum = {
-  id: 'id',
-  user_id: 'user_id'
-};
-
-exports.Prisma.CouponOrderByRelevanceFieldEnum = {
-  id: 'id',
-  user_id: 'user_id',
-  code: 'code'
 };
 
 exports.Prisma.ReviewOrderByRelevanceFieldEnum = {
@@ -288,19 +292,13 @@ exports.TransactionStatus = exports.$Enums.TransactionStatus = {
   canceled: 'canceled'
 };
 
-exports.PointSource = exports.$Enums.PointSource = {
-  referral: 'referral',
-  refund: 'refund',
-  redeem: 'redeem'
-};
-
 exports.Prisma.ModelName = {
   User: 'User',
+  Coupon: 'Coupon',
+  CouponUser: 'CouponUser',
   Event: 'Event',
   Voucher: 'Voucher',
   Transaction: 'Transaction',
-  Point: 'Point',
-  Coupon: 'Coupon',
   Review: 'Review'
 };
 

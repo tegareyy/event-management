@@ -29,11 +29,43 @@ model User {
   referrer         User?   @relation("UserReferrals", fields: [referred_by_code], references: [referral_code])
   referrals        User[]  @relation("UserReferrals") // user-user yang direferensikan oleh user ini
 
-  coupons      Coupon[]
+  points_balance     Int       @default(0)
+  points_expiry_date DateTime?
+
+  coupons      CouponUser[]
   events       Event[]
-  points       Point[]
   reviews      Review[]
   transactions Transaction[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  is_deleted Boolean  @default(false)
+}
+
+model Coupon {
+  id              String    @id @default(uuid())
+  name            String?
+  description     String?
+  code            String    @unique
+  discount_amount Int
+  expired_at      DateTime?
+
+  users CouponUser[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  is_deleted Boolean  @default(false)
+}
+
+model CouponUser {
+  id         String    @id @default(uuid())
+  expired_at DateTime?
+  used       Boolean   @default(false)
+
+  user_id   String
+  user      User   @relation(fields: [user_id], references: [id])
+  coupon_id String
+  coupon    Coupon @relation(fields: [coupon_id], references: [id])
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
@@ -89,33 +121,6 @@ model Transaction {
   payment_proof   String?
   event           Event             @relation(fields: [event_id], references: [id])
   user            User              @relation(fields: [user_id], references: [id])
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  is_deleted Boolean  @default(false)
-}
-
-model Point {
-  id         String      @id @default(uuid())
-  user_id    String
-  amount     Int
-  source     PointSource
-  expired_at DateTime
-  user       User        @relation(fields: [user_id], references: [id])
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  is_deleted Boolean  @default(false)
-}
-
-model Coupon {
-  id              String   @id @default(uuid())
-  user_id         String
-  code            String   @unique
-  discount_amount Int
-  expired_at      DateTime
-  used            Boolean  @default(false)
-  user            User     @relation(fields: [user_id], references: [id])
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
