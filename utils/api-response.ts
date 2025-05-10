@@ -1,37 +1,48 @@
 import { Response } from "express";
 
-interface ISuccesRespone {
+interface ISuccessResponse {
   res: Response;
   data: any;
   pagination?: {
-    page_size: number;
+    pageSize: number;
     page: number;
-    total_pages: number;
-    total_items: number;
+    totalPages: number;
+    totalItems: number;
   };
 }
 
 interface IError {
   res: Response;
-  message: string;
-  statusCode?: number;
   error?: any;
+  statusCode?: number; // optional override
 }
 
-export const SuccessResponse = ({ res, data, pagination }: ISuccesRespone) => {
+export const successResponse = ({ res, data, pagination }: ISuccessResponse) => {
   return res.status(200).json({
     code: 200,
-    status: `Success`,
+    status: "success",
     data,
     pagination,
   });
 };
 
-export const ErrorRespone = ({ res, error = null, message = "Internal Server Error", statusCode = 500 }: IError) => {
-  return res.status(statusCode).json({
-    code: statusCode,
-    status: "Error",
+export const errorResponse = ({ res, error = null, statusCode }: IError) => {
+  let message = "Something went wrong";
+
+  if (error instanceof Error) {
+    message = error.message;
+  } else if (typeof error === "string") {
+    message = error;
+  } else if (error?.message) {
+    message = error.message;
+  }
+
+  // Default to 400 if no statusCode is provided
+  const code = statusCode ?? 400;
+
+  return res.status(code).json({
+    code,
+    status: "error",
     message,
-    error,
   });
 };

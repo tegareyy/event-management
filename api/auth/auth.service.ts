@@ -1,7 +1,7 @@
 import { UserRole } from "@prisma/client";
 import prisma from "../../lib/prisma";
 import { RegisterSchema } from "./auth.schema";
-import { GenerateReferralCode } from "../../utils/referral-code-generator";
+import { generateReferralCode } from "../../utils/referral-code-generator";
 
 class Service {
   async register({ data }: { data: RegisterSchema }) {
@@ -15,7 +15,7 @@ class Service {
       data: {
         ...data,
         role: UserRole.CUSTOMER,
-        referral_code: GenerateReferralCode(referralCode),
+        referral_code: generateReferralCode(referralCode),
       },
     });
   }

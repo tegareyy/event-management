@@ -1,4 +1,4 @@
-import { ErrorRespone, SuccessResponse } from "../../utils/api-response";
+import { errorResponse, successResponse } from "../../utils/api-response";
 import { AuthService } from "./auth.service";
 import { Request, Response } from "express";
 
@@ -9,12 +9,12 @@ class Controller {
         data: req.body,
       });
 
-      SuccessResponse({
+      successResponse({
         res,
         data: result,
       });
     } catch (error) {
-      ErrorRespone({ res, message: `Internal Server Error` });
+      errorResponse({ res, error });
     }
   }
 }
