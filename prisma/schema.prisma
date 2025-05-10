@@ -15,38 +15,28 @@ datasource db {
 }
 
 model User {
-  id                      String        @id @default(uuid())
-  full_name               String
-  email                   String        @unique
-  password                String
-  role                    UserRole
-  referral_code           String        @unique
-  is_verified             Boolean       @default(false)
-  referred_by             String?
-  profile_picture         String?
-  coupons                 Coupon[]
-  events                  Event[]
-  points                  Point[]
-  referral_logs_received  ReferralLog[] @relation("referee")
-  referral_logs_sent      ReferralLog[] @relation("referrer")
-  reviews                 Review[]
-  transactions            Transaction[]
+  id               String   @id @default(uuid())
+  full_name        String
+  email            String   @unique
+  password         String
+  role             UserRole
+  is_verified     Boolean       @default(false)
+  profile_picture String?
+
+  referral_code    String   @unique
+  referred_by_code String?
+  referrer         User?    @relation("UserReferrals", fields: [referred_by_code], references: [referral_code])
+  referrals        User[]   @relation("UserReferrals") // user-user yang direferensikan oleh user ini
+
+  coupons         Coupon[]
+  events          Event[]
+  points          Point[]
+  reviews         Review[]
+  transactions    Transaction[]
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  is_deleted Boolean @default(false)
-}
-
-model ReferralLog {
-  id           String   @id @default(uuid())
-  referrer_id  String
-  referee_id   String
-  referee      User     @relation("referee", fields: [referee_id], references: [id])
-  referrer     User     @relation("referrer", fields: [referrer_id], references: [id])
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  is_deleted Boolean @default(false)
+  is_deleted Boolean  @default(false)
 }
 
 model Event {
