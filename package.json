@@ -10,7 +10,11 @@
     "prisma:pull": "npx prisma db pull && npx prisma generate",
     "prisma:seed": "npx prisma db seed",
     "prisma:studio": "npx prisma studio",
-    "prisma:reset": "npx prisma migrate reset --force"
+    "prisma:reset": "npx prisma migrate reset --force",
+    
+    "build": "npx tsc",
+    "start": "npm run build && node dist/index.js",
+    "postinstall": "prisma generate"
   },
   "keywords": [],
   "author": "",
