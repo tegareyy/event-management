@@ -1,7 +1,7 @@
-import { UserRole } from "@prisma/client";
 import prisma from "../../lib/prisma";
 import { RegisterSchema } from "./auth.schema";
 import { generateReferralCode } from "../../utils/referral-code-generator";
+import { UserRole } from "../../prisma/generated";
 
 class Service {
   async register({ data }: { data: RegisterSchema }) {
@@ -19,8 +19,6 @@ class Service {
       },
     });
   }
-
-  
 }
 
 export const AuthService = new Service();

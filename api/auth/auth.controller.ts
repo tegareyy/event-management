@@ -1,10 +1,10 @@
-import { User } from "@prisma/client";
 import { errorResponse, successResponse } from "../../utils/api-response";
 import { LoginSchema } from "./auth.schema";
 import { AuthService } from "./auth.service";
 import { Request, Response } from "express";
 import { any } from "zod";
 import { encryptJWT } from "../../utils/jwt";
+import { User } from "../../prisma/generated";
 
 class Controller {
   async register(req: Request, res: Response) {
