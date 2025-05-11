@@ -12,7 +12,7 @@
     "prisma:studio": "npx prisma studio",
     "prisma:reset": "npx prisma migrate reset --force",
     
-    "build": "npx tsc",
+    "build": "npx prisma db push && npx prisma generate && npx tsc",
     "start": "npm run build && node dist/index.js",
     "postinstall": "prisma generate"
   },
